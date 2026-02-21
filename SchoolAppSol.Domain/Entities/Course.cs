@@ -1,11 +1,19 @@
-﻿using SchoolAppSol.Domain.Base;
+﻿
 
-namespace SchoolAppSol.Domain.Entities
+
+using SchoolAppSol.Domain.Base;
+
+namespace SchoolAppSol.Domain.Entities;
+
+public partial class Course : AuditableEntity<int>
 {
-    public sealed class Course : AuditableEntity<int>
-    {
-        public string Title { get; private set; } = default!;
-        public int Credits { get; private set; }
-        public int DepartmentID { get; private set; }
-    }
+    public int CourseId { get; set; }
+
+    public string? Title { get; set; }
+
+    public int Credits { get; set; }
+
+    public int DepartmentId { get; set; }
+
+    
 }
