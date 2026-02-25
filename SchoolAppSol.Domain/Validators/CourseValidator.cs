@@ -25,7 +25,7 @@ namespace SchoolAppSol.Domain.Validators
             Guard.GreaterThan(entity.Credits, 0, nameof(entity.Credits));
             Guard.GreaterThan(entity.DepartmentId, 0, nameof(entity.DepartmentId));
             Guard.GreaterThan(entity.CreationUser, 0, nameof(entity.CreationUser));
-            Guard.NotFutureDate(entity.CreationDate, nameof(entity.CreationDate));
+            Guard.NotFutureDate(entity.CreationDate, nameof(entity.CreationDatse));
 
             if (!await _department.ExistsActiveAsync(entity.DepartmentId, ct))
                 throw new DomainException("DepartmentId no existe o está eliminado.");
