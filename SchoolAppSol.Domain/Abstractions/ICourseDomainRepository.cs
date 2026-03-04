@@ -1,8 +1,10 @@
 ﻿
 
+using SchoolAppSol.Domain.Validators.Interfaces;
+
 namespace SchoolAppSol.Domain.Abstractions
 {
-    public interface ICourseDomainRepository
+    public interface ICourseDomainRepository 
     {
         Task<bool> ExistsActiveAsync(int courseId, CancellationToken ct = default);
         Task<bool> TitleExistsInDepartmentAsync(string title, 
