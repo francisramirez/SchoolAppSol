@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using SchoolAppSol.Application.Base;
 using SchoolAppSol.Application.Dtos.Course;
 using SchoolAppSol.Application.Interfaces.Course;
@@ -9,6 +7,7 @@ using SchoolAppSol.Domain.Common;
 using SchoolAppSol.Domain.Models;
 using SchoolAppSol.Domain.Repository;
 using SchoolAppSol.Domain.Validators.Interfaces;
+using SchoolAppSol.Persitence.Exceptions;
 
 namespace SchoolAppSol.Application.Services.Course
 {
@@ -87,19 +86,77 @@ namespace SchoolAppSol.Application.Services.Course
             return serviceResult;
         }
 
-        public Task<ServiceResult<bool>> DeleteCourseAsync(int id)
+        public async Task<ServiceResult<bool>> DeleteCourseAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ServiceResult<List<CourseModel>>> GetAllCoursesAsync()
+        public async Task<ServiceResult<List<CourseModel>>> GetAllCoursesAsync()
         {
-            throw new NotImplementedException();
+            ServiceResult<List<CourseModel>> result = new ServiceResult<List<CourseModel>>();
+
+            try
+            {
+                var courses = await _courseRepository.GetCoursesAsync();
+
+                result.Data = courses.ToList();
+                result.Success = true;
+            }
+            catch (DomainException dex)
+            {
+                _logger.LogError(dex.Message, dex.ToString());
+                result.Success = false;
+                result.Message = dex.Message;
+                return result;
+            }
+            catch (PersistenceException pex)
+            {
+                _logger.LogError(pex.Message, pex.ToString());
+                result.Success = false;
+                result.Message = pex.Message;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex.ToString());
+                result.Success = false;
+                result.Message = ex.Message;
+                return result;
+            }
+
+            return result;
         }
 
-        public Task<ServiceResult<CourseModel>> GetCourseByIdAsync(int id)
+        public async Task<ServiceResult<CourseModel>> GetCourseByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            ServiceResult<CourseModel> result = new ServiceResult<CourseModel>();
+
+            try
+            {
+                if (id <= 0)
+                {
+                    result.Message = "El id del curso es inváido.";
+                    result.Success = false;
+                    return result;
+                }
+
+                Domain.Entities.Course? course = await _courseRepository.GetByIdAsync(id);
+
+                if (course == null) 
+                {
+                    result.Message = $"El curso con el id:{id} no se encuentra registrado. ";
+                    result.Success = false;
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = "Ocurrió un error obteniendo el curso.";
+                result.Success = false;
+                _logger.LogError(result.Message, ex.ToString());
+            }
+
+            return result;
         }
 
         public Task<ServiceResult<bool>> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)

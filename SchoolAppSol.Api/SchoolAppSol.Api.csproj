@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolAppSol.Application\SchoolAppSol.Application.csproj" />
+    <ProjectReference Include="..\SchoolAppSol.Persitence\SchoolAppSol.Persitence.csproj" />
+  </ItemGroup>
+
 </Project>

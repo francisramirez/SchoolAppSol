@@ -7,6 +7,7 @@ namespace SchoolAppSol.Domain.Repository
     public interface ICourseRepository : IRepository<Course, int>
     {
         Task<IReadOnlyList<CourseModel>> GetCoursesByDepartmentIdAsync(int departmentId, CancellationToken ct = default);
+        Task<IReadOnlyList<CourseModel>> GetCoursesAsync(CancellationToken ct = default);
 
     }
 }
