@@ -1,4 +1,14 @@
 
+using Microsoft.EntityFrameworkCore;
+using SchoolAppSol.Application.Interfaces.Course;
+using SchoolAppSol.Application.Services.Course;
+using SchoolAppSol.Domain.Abstractions;
+using SchoolAppSol.Domain.Repository;
+using SchoolAppSol.Domain.Validators;
+using SchoolAppSol.Domain.Validators.Interfaces;
+using SchoolAppSol.Persitence.Context;
+using SchoolAppSol.Persitence.Repositories;
+
 namespace SchoolAppSol.Api
 {
     public class Program
@@ -8,6 +18,16 @@ namespace SchoolAppSol.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
+
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseDomainRepository, CourseRepository>();
+            builder.Services.AddScoped<IDepartmentDomainRepository, DepartmentRepository>();
+            builder.Services.AddScoped<ICourseValidator, CourseValidator>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
+
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -142,12 +142,24 @@ namespace SchoolAppSol.Application.Services.Course
 
                 Domain.Entities.Course? course = await _courseRepository.GetByIdAsync(id);
 
-                if (course == null) 
+                if (course == null)
                 {
                     result.Message = $"El curso con el id:{id} no se encuentra registrado. ";
                     result.Success = false;
                     return result;
                 }
+
+                CourseModel courseModel = new CourseModel()
+                {
+                    CourseId = course.CourseId,
+                    Credits = course.Credits,
+                    DepartmentId = course.DepartmentId,
+                    Title = course.Title
+                };
+
+                result.Success = true;
+                result.Data = courseModel;
+
             }
             catch (Exception ex)
             {

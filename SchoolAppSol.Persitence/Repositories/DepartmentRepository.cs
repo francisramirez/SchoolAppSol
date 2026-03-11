@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
+using SchoolAppSol.Domain.Abstractions;
 using SchoolAppSol.Domain.Entities;
 using SchoolAppSol.Domain.Models;
 using SchoolAppSol.Domain.Repository;
@@ -8,7 +9,7 @@ using SchoolAppSol.Persitence.Context;
 
 namespace SchoolAppSol.Persitence.Repositories
 {
-    public sealed class DepartmentRepository : IDepartmentRepository
+    public sealed class DepartmentRepository : IDepartmentRepository, IDepartmentDomainRepository
     {
         private readonly SchoolContext _context;
         public DepartmentRepository(SchoolContext context)
@@ -19,6 +20,12 @@ namespace SchoolAppSol.Persitence.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> ExistsActiveAsync(int departmentId, CancellationToken ct = default)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IReadOnlyList<DepartmentModel>> GetAllActiveAsync(CancellationToken ct = default)
         {
             return await _context.Departments
@@ -39,6 +46,11 @@ namespace SchoolAppSol.Persitence.Repositories
         }
 
         public Task<Department?> GetByIdAsync(int id, CancellationToken ct = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> NameExistsAsync(string name, int? excludingDepartmentId, CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }

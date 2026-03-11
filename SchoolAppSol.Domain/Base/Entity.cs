@@ -1,7 +1,10 @@
-﻿namespace SchoolAppSol.Domain.Base
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SchoolAppSol.Domain.Base
 {
     public abstract class Entity<Tkey>
     {
-        public Tkey Id { get; set; }
+        [NotMapped]
+        public Tkey? Id { get; set; }
     }
 }
