@@ -8,6 +8,7 @@ using SchoolAppSol.Domain.Validators;
 using SchoolAppSol.Domain.Validators.Interfaces;
 using SchoolAppSol.Persitence.Context;
 using SchoolAppSol.Persitence.Repositories;
+using SchoolAppSol.Infrastructure;
 
 namespace SchoolAppSol.Api
 {
@@ -26,8 +27,9 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<IDepartmentDomainRepository, DepartmentRepository>();
             builder.Services.AddScoped<ICourseValidator, CourseValidator>();
             builder.Services.AddScoped<ICourseService, CourseService>();
-
-
+            
+            // Register infrastructure services
+            builder.Services.AddInfrastructureServices();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
