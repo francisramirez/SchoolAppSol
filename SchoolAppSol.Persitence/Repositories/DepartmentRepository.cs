@@ -1,4 +1,4 @@
-﻿
+
 
 using Microsoft.EntityFrameworkCore;
 using SchoolAppSol.Domain.Abstractions;
@@ -16,14 +16,16 @@ namespace SchoolAppSol.Persitence.Repositories
         {
             _context = context;
         }
-        public Task AddAsync(Department entity, CancellationToken ct = default)
+        public async Task AddAsync(Department entity, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            await _context.Departments.AddAsync(entity, ct);
+            await _context.SaveChangesAsync(ct);
         }
 
-        public Task<bool> ExistsActiveAsync(int departmentId, CancellationToken ct = default)
+        public async Task<bool> ExistsActiveAsync(int departmentId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            return await _context.Departments.AsNoTracking()
+                .AnyAsync(d => d.DepartmentId == departmentId && !d.Deleted, ct);
         }
 
         public async Task<IReadOnlyList<DepartmentModel>> GetAllActiveAsync(CancellationToken ct = default)
@@ -40,29 +42,61 @@ namespace SchoolAppSol.Persitence.Repositories
                 }).ToListAsync();
         }
 
-        public Task<IReadOnlyList<Department>> GetAllAsync(CancellationToken ct = default)
+        public async Task<IReadOnlyList<Department>> GetAllAsync(CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            return await _context.Departments
+                .Where(d => !d.Deleted)
+                .AsNoTracking()
+                .ToListAsync(ct);
         }
 
-        public Task<Department?> GetByIdAsync(int id, CancellationToken ct = default)
+        public async Task<Department?> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            return await _context.Departments
+                .AsNoTracking()
+                .FirstOrDefaultAsync(d => d.DepartmentId == id && !d.Deleted, ct);
         }
 
-        public Task<bool> NameExistsAsync(string name, int? excludingDepartmentId, CancellationToken ct = default)
+        public async Task<bool> NameExistsAsync(string name, int? excludingDepartmentId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            return await _context.Departments
+                .AsNoTracking()
+                .AnyAsync(d => d.Name == name && (!excludingDepartmentId.HasValue || d.DepartmentId != excludingDepartmentId.Value) && !d.Deleted, ct);
         }
 
-        public Task SoftDeleteAsync(int id, int userId, CancellationToken ct = default)
+        public async Task SoftDeleteAsync(int id, int userId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var department = await _context.Departments
+                .FirstOrDefaultAsync(d => d.DepartmentId == id && !d.Deleted, ct);
+
+            if (department is null)
+                throw new Persitence.Exceptions.PersistenceException("El departamento no se encuentra registrado.");
+
+            department.DeletedDate = DateTime.UtcNow;
+            department.UserDeleted = userId;
+            department.Deleted = true;
+
+            _context.Departments.Update(department);
+            await _context.SaveChangesAsync(ct);
         }
 
-        public Task UpdateAsync(Department entity, CancellationToken ct = default)
+        public async Task UpdateAsync(Department entity, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var department = await _context.Departments.AsNoTracking()
+                .FirstOrDefaultAsync(d => d.DepartmentId == entity.DepartmentId && !d.Deleted, ct);
+
+            if (department is null)
+                throw new Persitence.Exceptions.PersistenceException("El departamento no se encuentra registrado.");
+
+            department.Name = entity.Name;
+            department.Budget = entity.Budget;
+            department.StartDate = entity.StartDate;
+            department.Administrator = entity.Administrator;
+            department.ModifyDate = DateTime.UtcNow;
+            department.UserMod = entity.UserMod;
+
+            _context.Departments.Update(department);
+            await _context.SaveChangesAsync(ct);
         }
     }
 }
