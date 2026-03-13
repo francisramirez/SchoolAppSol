@@ -18,7 +18,6 @@ namespace SchoolAppSol.Domain.Validators
         {
             Guard.NotNull(entity, nameof(entity));
             Guard.NotNullOrWhiteSpace(entity.Name, nameof(entity.Name), 50); // Assuming 50 based on standard name lengths, can be adjusted
-            Guard.GreaterThan(entity.Budget, 0, nameof(entity.Budget));
             Guard.GreaterThan(entity.CreationUser, 0, nameof(entity.CreationUser));
             Guard.NotFutureDate(entity.CreationDate, nameof(entity.CreationDate));
             Guard.NotNull(entity.StartDate, nameof(entity.StartDate));
@@ -40,7 +39,6 @@ namespace SchoolAppSol.Domain.Validators
         {
             Guard.GreaterThan(entity.DepartmentId, 0, nameof(entity.DepartmentId));
             Guard.NotNullOrWhiteSpace(entity.Name, nameof(entity.Name), 50);
-            Guard.GreaterThan(entity.Budget, 0, nameof(entity.Budget));
             Guard.NotNull(entity.StartDate, nameof(entity.StartDate));
             Guard.NotNull(entity.ModifyDate, nameof(entity.ModifyDate));
             Guard.GreaterThan(entity.UserMod ?? 0, 0, nameof(entity.UserMod));

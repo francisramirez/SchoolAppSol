@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolAppSol.Application.Interfaces.Course;
 using SchoolAppSol.Application.Services.Course;
+using SchoolAppSol.Application.Interfaces.Department;
+using SchoolAppSol.Application.Services.Department;
 using SchoolAppSol.Domain.Abstractions;
 using SchoolAppSol.Domain.Repository;
 using SchoolAppSol.Domain.Validators;
@@ -25,8 +27,11 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseDomainRepository, CourseRepository>();
             builder.Services.AddScoped<IDepartmentDomainRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<ICourseValidator, CourseValidator>();
+            builder.Services.AddScoped<IDepartmentValidator, DepartmentValidator>();
             builder.Services.AddScoped<ICourseService, CourseService>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             
             // Register infrastructure services
             builder.Services.AddInfrastructureServices();
