@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc;
+using SchoolAppSol.Application.Base;
+using SchoolAppSol.Application.Dtos.Department;
+using SchoolAppSol.Application.Interfaces.Department;
+using SchoolAppSol.Domain.Models;
 
 namespace SchoolAppSol.Api.Controllers
 {
@@ -7,40 +10,86 @@ namespace SchoolAppSol.Api.Controllers
     [ApiController]
     public class DepartmentController : ControllerBase
     {
-        public DepartmentController()
+        private readonly IDepartmentService _departmentService;
+
+        public DepartmentController(IDepartmentService departmentService)
         {
-            
-        }
-        // GET: api/<DepartmentController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
+            _departmentService = departmentService;
         }
 
-        // GET api/<DepartmentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetDepartments")]
+        public async Task<IActionResult> Get()
         {
-            return "value";
+            ServiceResult<List<DepartmentModel>> result = new ServiceResult<List<DepartmentModel>>();
+
+            result = await _departmentService.GetAllDepartmentsAsync();
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
 
-        // POST api/<DepartmentController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("GetDepartmentById")]
+        public async Task<IActionResult> Get(int id)
         {
+            ServiceResult<DepartmentModel> result = new ServiceResult<DepartmentModel>();
+
+            result = await _departmentService.GetDepartmentByIdAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
 
-        // PUT api/<DepartmentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("SaveDepartment")]
+        public async Task<IActionResult> Post(DepartmentAddDto departmentAddDto)
         {
+            ServiceResult<bool> result = new ServiceResult<bool>();
+
+            result = await _departmentService.CreateDepartmentAsync(departmentAddDto);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
 
-        // DELETE api/<DepartmentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost("UpdateDepartment")]
+        public async Task<IActionResult> Post(UpdateDepartmentDto updateDepartmentDto)
         {
+            ServiceResult<bool> result = new ServiceResult<bool>();
+
+            result = await _departmentService.UpdateDepartmentAsync(updateDepartmentDto.Id, updateDepartmentDto);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost("DeleteDepartment")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            ServiceResult<bool> result = new ServiceResult<bool>();
+
+            result = await _departmentService.DeleteDepartmentAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
     }
 }
