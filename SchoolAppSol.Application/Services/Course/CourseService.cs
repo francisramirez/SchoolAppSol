@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using SchoolAppSol.Application.Base;
 using SchoolAppSol.Application.Dtos.Course;
 using SchoolAppSol.Application.Interfaces.Course;
@@ -171,9 +171,78 @@ namespace SchoolAppSol.Application.Services.Course
             return result;
         }
 
-        public Task<ServiceResult<bool>> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
+        public async Task<ServiceResult<bool>> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
-            throw new NotImplementedException();
+            ServiceResult<bool> serviceResult = new ServiceResult<bool>();
+
+            _logger.LogInformation("Starting course update process for id: {id}", id);
+
+            try
+            {
+                if (updateCourseDto == null)
+                {
+                    _logger.LogWarning("Course update failed: UpdateCourseDto is null.");
+                    serviceResult.Success = false;
+                    serviceResult.Message = "Course data is required.";
+                    serviceResult.Data = false;
+                    return serviceResult;
+                }
+
+                if (id != updateCourseDto.Id)
+                {
+                    _logger.LogWarning("Course update failed: id mismatch. Param: {id}, Dto: {dtoId}", id, updateCourseDto.Id);
+                    serviceResult.Success = false;
+                    serviceResult.Message = "El id proporcionado no coincide con el del curso a actualizar.";
+                    serviceResult.Data = false;
+                    return serviceResult;
+                }
+
+                Domain.Entities.Course course = new Domain.Entities.Course
+                {
+                    CourseId = updateCourseDto.Id,
+                    Title = updateCourseDto.Title,
+                    Credits = updateCourseDto.Credits,
+                    DepartmentId = updateCourseDto.DepartmentId,
+                    UserMod = updateCourseDto.UpdateUser,
+                    ModifyDate = updateCourseDto.UpdateDate
+                };
+
+                // Validamos las reglas de negocio para la actualización
+                await _courseValidator.ValidateForUpdateAsync(course);
+                _logger.LogInformation("Course validation successful for update: {@course}", course);
+
+                // Actualizamos el curso en persistencia
+                await _courseRepository.UpdateAsync(course);
+                _logger.LogInformation("Course updated in repository successfully: {@course}", course);
+                
+                serviceResult.Success = true;
+                serviceResult.Message = "Course updated successfully.";
+                serviceResult.Data = true;
+
+            }
+            catch (DomainException dex)
+            {
+                _logger.LogWarning(dex, "Domain validation failed while updating course.");
+                serviceResult.Success = false;
+                serviceResult.Message = dex.Message;
+                serviceResult.Data = false;
+            }
+            catch (PersistenceException pex)
+            {
+                _logger.LogWarning(pex, "Persistence validation failed while updating course.");
+                serviceResult.Success = false;
+                serviceResult.Message = pex.Message;
+                serviceResult.Data = false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while updating a course with id: {id}", id);
+                serviceResult.Success = false;
+                serviceResult.Message = "An error occurred while updating a course.";
+                serviceResult.Data = false;
+            }
+
+            return serviceResult;
         }
     }
 }
