@@ -32,9 +32,17 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<IOnsiteCourseDomainRepository, OnsiteCourseRepository>();
             builder.Services.AddScoped<ICourseValidator, CourseValidator>();
             builder.Services.AddScoped<IDepartmentValidator, DepartmentValidator>();
+            builder.Services.AddScoped<IOnlineCourseValidator, OnlineCourseValidator>();
+            builder.Services.AddScoped<IOnsiteCourseValidator, OnsiteCourseValidator>();
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             
+            builder.Services.AddScoped<IOnsiteCourseRepository, OnsiteCourseRepository>();
+            builder.Services.AddScoped<IOnsiteCourseDomainRepository, OnsiteCourseRepository>();
+
+            builder.Services.AddScoped<IOnlineCourseRepository, OnlineCourseRepository>();
+            builder.Services.AddScoped<IOnlineCourseDomainRepository, OnlineCourseRepository>();
+
             // Register infrastructure services
             builder.Services.AddInfrastructureServices();
 

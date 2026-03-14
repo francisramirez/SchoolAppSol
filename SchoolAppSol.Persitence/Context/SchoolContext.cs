@@ -1,4 +1,4 @@
-﻿
+
 
 using Microsoft.EntityFrameworkCore;
 using SchoolAppSol.Domain.Entities;
@@ -15,5 +15,7 @@ namespace SchoolAppSol.Persitence.Context
         public DbSet<Course> Courses { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<EnrollmentStatus>  EnrollmentStatuses { get; set; }
+        public DbSet<OnlineCourse> OnlineCourses { get; set; }
+        public DbSet<OnsiteCourse> OnsiteCourses { get; set; }
     }
 }
