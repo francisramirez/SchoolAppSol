@@ -3,7 +3,6 @@ using SchoolAppSol.Application.Base;
 using SchoolAppSol.Application.Dtos.Department;
 using SchoolAppSol.Application.Interfaces.Department;
 using SchoolAppSol.Domain.Common;
-using SchoolAppSol.Domain.Entities;
 using SchoolAppSol.Domain.Models;
 using SchoolAppSol.Domain.Repository;
 using SchoolAppSol.Domain.Validators.Interfaces;
