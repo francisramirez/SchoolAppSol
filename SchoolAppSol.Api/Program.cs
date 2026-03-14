@@ -4,6 +4,10 @@ using SchoolAppSol.Application.Interfaces.Course;
 using SchoolAppSol.Application.Services.Course;
 using SchoolAppSol.Application.Interfaces.Department;
 using SchoolAppSol.Application.Services.Department;
+using SchoolAppSol.Application.Interfaces.OnlineCourse;
+using SchoolAppSol.Application.Services.OnlineCourse;
+using SchoolAppSol.Application.Interfaces.OnsiteCourse;
+using SchoolAppSol.Application.Services.OnsiteCourse;
 using SchoolAppSol.Domain.Abstractions;
 using SchoolAppSol.Domain.Repository;
 using SchoolAppSol.Domain.Validators;
@@ -36,6 +40,8 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<IOnsiteCourseValidator, OnsiteCourseValidator>();
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IOnlineCourseService, OnlineCourseService>();
+            builder.Services.AddScoped<IOnsiteCourseService, OnsiteCourseService>();
             
             builder.Services.AddScoped<IOnsiteCourseRepository, OnsiteCourseRepository>();
             builder.Services.AddScoped<IOnsiteCourseDomainRepository, OnsiteCourseRepository>();
