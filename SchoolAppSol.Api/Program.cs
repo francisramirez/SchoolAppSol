@@ -42,10 +42,8 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IOnlineCourseService, OnlineCourseService>();
             builder.Services.AddScoped<IOnsiteCourseService, OnsiteCourseService>();
-            
             builder.Services.AddScoped<IOnsiteCourseRepository, OnsiteCourseRepository>();
             builder.Services.AddScoped<IOnsiteCourseDomainRepository, OnsiteCourseRepository>();
-
             builder.Services.AddScoped<IOnlineCourseRepository, OnlineCourseRepository>();
             builder.Services.AddScoped<IOnlineCourseDomainRepository, OnlineCourseRepository>();
 
