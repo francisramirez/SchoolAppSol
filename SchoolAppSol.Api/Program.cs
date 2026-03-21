@@ -12,6 +12,8 @@ using SchoolAppSol.Application.Interfaces.CourseEnrollment;
 using SchoolAppSol.Application.Services.CourseEnrollment;
 using SchoolAppSol.Application.Interfaces.Student;
 using SchoolAppSol.Application.Services.Student;
+using SchoolAppSol.Application.Interfaces.Auth;
+using SchoolAppSol.Application.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -45,6 +47,8 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<ICourseEnrollmentDomainRepository, CourseEnrollmentRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IStudentDomainRepository, StudentRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserDomainRepository, UserRepository>();
 
             builder.Services.AddScoped<ICourseValidator, CourseValidator>();            
             builder.Services.AddScoped<IDepartmentValidator, DepartmentValidator>();
@@ -52,6 +56,7 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<IOnsiteCourseValidator, OnsiteCourseValidator>();
             builder.Services.AddScoped<ICourseEnrollmentValidator, CourseEnrollmentValidator>();
             builder.Services.AddScoped<IStudentValidator, StudentValidator>();
+            builder.Services.AddScoped<IUserValidator, UserValidator>();
 
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
@@ -59,6 +64,7 @@ namespace SchoolAppSol.Api
             builder.Services.AddScoped<IOnsiteCourseService, OnsiteCourseService>();
             builder.Services.AddScoped<ICourseEnrollmentService, CourseEnrollmentService>();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
             
             builder.Services.AddScoped<IOnsiteCourseRepository, OnsiteCourseRepository>();
             builder.Services.AddScoped<IOnsiteCourseDomainRepository, OnsiteCourseRepository>();
