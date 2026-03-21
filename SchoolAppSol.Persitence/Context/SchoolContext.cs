@@ -17,5 +17,7 @@ namespace SchoolAppSol.Persitence.Context
         public DbSet<EnrollmentStatus>  EnrollmentStatuses { get; set; }
         public DbSet<OnlineCourse> OnlineCourses { get; set; }
         public DbSet<OnsiteCourse> OnsiteCourses { get; set; }
+        public DbSet<CourseEnrollment> CourseEnrollments { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
