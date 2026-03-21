@@ -18,8 +18,6 @@ namespace SchoolAppSol.Api
 
             builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
 
-            builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
-
             // Register infrastructure services
             builder.Services.AddInfrastructureServices();
 
