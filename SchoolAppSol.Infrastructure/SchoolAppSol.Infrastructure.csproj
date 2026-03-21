@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SchoolAppSol.Domain\SchoolAppSol.Domain.csproj" />
     <ProjectReference Include="..\SchoolAppSol.Application\SchoolAppSol.Application.csproj" />
+    <ProjectReference Include="..\SchoolAppSol.Persitence\SchoolAppSol.Persitence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

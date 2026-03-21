@@ -1,28 +1,9 @@
 
 using Microsoft.EntityFrameworkCore;
-using SchoolAppSol.Application.Interfaces.Course;
-using SchoolAppSol.Application.Services.Course;
-using SchoolAppSol.Application.Interfaces.Department;
-using SchoolAppSol.Application.Services.Department;
-using SchoolAppSol.Application.Interfaces.OnlineCourse;
-using SchoolAppSol.Application.Services.OnlineCourse;
-using SchoolAppSol.Application.Interfaces.OnsiteCourse;
-using SchoolAppSol.Application.Services.OnsiteCourse;
-using SchoolAppSol.Application.Interfaces.CourseEnrollment;
-using SchoolAppSol.Application.Services.CourseEnrollment;
-using SchoolAppSol.Application.Interfaces.Student;
-using SchoolAppSol.Application.Services.Student;
-using SchoolAppSol.Application.Interfaces.Auth;
-using SchoolAppSol.Application.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using SchoolAppSol.Domain.Abstractions;
-using SchoolAppSol.Domain.Repository;
-using SchoolAppSol.Domain.Validators;
-using SchoolAppSol.Domain.Validators.Interfaces;
 using SchoolAppSol.Persitence.Context;
-using SchoolAppSol.Persitence.Repositories;
 using SchoolAppSol.Infrastructure;
 
 namespace SchoolAppSol.Api
@@ -37,39 +18,7 @@ namespace SchoolAppSol.Api
 
             builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
 
-            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
-            builder.Services.AddScoped<ICourseDomainRepository, CourseRepository>();
-            builder.Services.AddScoped<IDepartmentDomainRepository, DepartmentRepository>();
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            builder.Services.AddScoped<IOnsiteCourseRepository, OnsiteCourseRepository>();
-            builder.Services.AddScoped<IOnsiteCourseDomainRepository, OnsiteCourseRepository>();
-            builder.Services.AddScoped<ICourseEnrollmentRepository, CourseEnrollmentRepository>();
-            builder.Services.AddScoped<ICourseEnrollmentDomainRepository, CourseEnrollmentRepository>();
-            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-            builder.Services.AddScoped<IStudentDomainRepository, StudentRepository>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IUserDomainRepository, UserRepository>();
-
-            builder.Services.AddScoped<ICourseValidator, CourseValidator>();            
-            builder.Services.AddScoped<IDepartmentValidator, DepartmentValidator>();
-            builder.Services.AddScoped<IOnlineCourseValidator, OnlineCourseValidator>();
-            builder.Services.AddScoped<IOnsiteCourseValidator, OnsiteCourseValidator>();
-            builder.Services.AddScoped<ICourseEnrollmentValidator, CourseEnrollmentValidator>();
-            builder.Services.AddScoped<IStudentValidator, StudentValidator>();
-            builder.Services.AddScoped<IUserValidator, UserValidator>();
-
-            builder.Services.AddScoped<ICourseService, CourseService>();
-            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-            builder.Services.AddScoped<IOnlineCourseService, OnlineCourseService>();
-            builder.Services.AddScoped<IOnsiteCourseService, OnsiteCourseService>();
-            builder.Services.AddScoped<ICourseEnrollmentService, CourseEnrollmentService>();
-            builder.Services.AddScoped<IStudentService, StudentService>();
-            builder.Services.AddScoped<IAuthService, AuthService>();
-            
-            builder.Services.AddScoped<IOnsiteCourseRepository, OnsiteCourseRepository>();
-            builder.Services.AddScoped<IOnsiteCourseDomainRepository, OnsiteCourseRepository>();
-            builder.Services.AddScoped<IOnlineCourseRepository, OnlineCourseRepository>();
-            builder.Services.AddScoped<IOnlineCourseDomainRepository, OnlineCourseRepository>();
+            builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
 
             // Register infrastructure services
             builder.Services.AddInfrastructureServices();
