@@ -80,6 +80,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddCourseEnrollmentDependency(this IServiceCollection services)
     {
+        services.AddScoped<IEnrollmentStatusDomainRepository, EnrollmentStatusRepository>();
         services.AddScoped<ICourseEnrollmentRepository, CourseEnrollmentRepository>();
         services.AddScoped<ICourseEnrollmentDomainRepository, CourseEnrollmentRepository>();
         services.AddScoped<ICourseEnrollmentValidator, CourseEnrollmentValidator>();
