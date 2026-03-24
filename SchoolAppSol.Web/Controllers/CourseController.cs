@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolAppSol.Application.Base;
 using SchoolAppSol.Application.Interfaces.Course;
-using SchoolAppSol.Application.Services.Course;
-using SchoolAppSol.Domain.Entities;
 using SchoolAppSol.Domain.Models;
 
 namespace SchoolAppSol.Web.Controllers
