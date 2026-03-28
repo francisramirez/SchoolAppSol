@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SchoolAppSol.Application\SchoolAppSol.Application.csproj" />
     <ProjectReference Include="..\SchoolAppSol.Persitence\SchoolAppSol.Persitence.csproj" />
+    <ProjectReference Include="..\SchoolAppSol.ApiClient\SchoolAppSol.ApiClient.csproj" />
   </ItemGroup>
 
 </Project>

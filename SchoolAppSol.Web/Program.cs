@@ -13,6 +13,7 @@ using SchoolAppSol.Domain.Validators;
 using SchoolAppSol.Domain.Validators.Interfaces;
 using SchoolAppSol.Persitence.Context;
 using SchoolAppSol.Persitence.Repositories;
+using SchoolAppSol.ApiClient;
 
 namespace SchoolAppSol.Web
 {
@@ -45,6 +46,8 @@ namespace SchoolAppSol.Web
             builder.Services.AddScoped<IOnlineCourseRepository, OnlineCourseRepository>();
             builder.Services.AddScoped<IOnlineCourseDomainRepository, OnlineCourseRepository>();
 
+            var apiBaseUrl = builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7119/"; // Update this to your real API URL
+            builder.Services.AddApiClients(apiBaseUrl);
 
             builder.Services.AddControllersWithViews();
 
