@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolAppSol.Application.Base;
-using SchoolAppSol.Application.Interfaces.Department;
+using SchoolAppSol.ApiClient.Interfaces;
 using SchoolAppSol.Domain.Models;
 using SchoolAppSol.Application.Dtos.Department;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace SchoolAppSol.Web.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentService _departmentService;
+        private readonly IDepartmentApiClient _departmentService;
 
-        public DepartmentController(IDepartmentService departmentService)
+        public DepartmentController(IDepartmentApiClient departmentService)
         {
             _departmentService = departmentService;
         }
