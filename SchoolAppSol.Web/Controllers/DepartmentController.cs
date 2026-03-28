@@ -11,12 +11,19 @@ namespace SchoolAppSol.Web.Controllers
 {
     public class DepartmentController : Controller
     {
+        private readonly IDepartmentService _departmentService;
 
         public DepartmentController(IDepartmentService departmentService)
         {
+            _departmentService = departmentService;
         }
+        public async Task<ActionResult> Index()
+        {
+            ServiceResult<List<DepartmentModel>> result = new ServiceResult<List<DepartmentModel>>();
 
-        // GET: DepartmentController
+            result = await _departmentService.GetAllDepartmentsAsync();
+
+            if (!result.Success)
             {
                 ViewBag.Message = result.Message;
                 return View();
@@ -24,6 +31,7 @@ namespace SchoolAppSol.Web.Controllers
 
             return View(result.Data);
         }
+
 
         // GET: DepartmentController/Details/5
         public async Task<ActionResult> Details(int id)
