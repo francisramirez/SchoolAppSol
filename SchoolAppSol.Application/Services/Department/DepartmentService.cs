@@ -55,7 +55,9 @@ namespace SchoolAppSol.Application.Services.Department
 
                 await _departmentRepository.AddAsync(department);
                 _logger.LogInformation("Department added to repository successfully.");
-                
+
+                var departmentAdded = department.DepartmentId;
+
                 serviceResult.Success = true;
                 serviceResult.Message = "Department created successfully.";
                 serviceResult.Data = true;

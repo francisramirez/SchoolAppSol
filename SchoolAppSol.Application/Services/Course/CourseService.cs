@@ -64,6 +64,7 @@ namespace SchoolAppSol.Application.Services.Course
                 serviceResult.Message = "Course created successfully.";
                 serviceResult.Data = true;
 
+            
             }
             catch (DomainException dex)
             {
@@ -85,12 +86,10 @@ namespace SchoolAppSol.Application.Services.Course
 
             return serviceResult;
         }
-
         public async Task<ServiceResult<bool>> DeleteCourseAsync(int id)
         {
             throw new NotImplementedException();
         }
-
         public async Task<ServiceResult<List<CourseModel>>> GetAllCoursesAsync()
         {
             ServiceResult<List<CourseModel>> result = new ServiceResult<List<CourseModel>>();
@@ -126,7 +125,6 @@ namespace SchoolAppSol.Application.Services.Course
 
             return result;
         }
-
         public async Task<ServiceResult<CourseModel>> GetCourseByIdAsync(int id)
         {
             ServiceResult<CourseModel> result = new ServiceResult<CourseModel>();
@@ -170,7 +168,6 @@ namespace SchoolAppSol.Application.Services.Course
 
             return result;
         }
-
         public async Task<ServiceResult<bool>> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
             ServiceResult<bool> serviceResult = new ServiceResult<bool>();

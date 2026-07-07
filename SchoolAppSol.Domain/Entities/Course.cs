@@ -2,6 +2,7 @@
 
 
 using SchoolAppSol.Domain.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolAppSol.Domain.Entities;

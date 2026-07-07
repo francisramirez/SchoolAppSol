@@ -1,10 +1,19 @@
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using SchoolAppSol.Persitence.Context;
+using SchoolAppSol.Application.Interfaces.Course;
+using SchoolAppSol.Application.Interfaces.Department;
+using SchoolAppSol.Application.Services.Course;
+using SchoolAppSol.Application.Services.Department;
+using SchoolAppSol.Domain.Abstractions;
+using SchoolAppSol.Domain.Repository;
+using SchoolAppSol.Domain.Validators;
+using SchoolAppSol.Domain.Validators.Interfaces;
 using SchoolAppSol.Infrastructure;
+using SchoolAppSol.Persitence.Context;
+using SchoolAppSol.Persitence.Repositories;
+using System.Text;
 
 namespace SchoolAppSol.Api
 {
@@ -19,7 +28,22 @@ namespace SchoolAppSol.Api
             builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
 
             // Register infrastructure services
-            builder.Services.AddInfrastructureServices();
+           // builder.Services.AddInfrastructureServices();
+
+            builder.Services.AddScoped<IDepartmentDomainRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentValidator, DepartmentValidator>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseDomainRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseValidator, CourseValidator>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
+
+
+            //builder.Services.AddHttpClient();
+            //builder.Services.AddScoped<IDepartmentApiClient, DepartmentApiClient>();
+
 
             // Configure JWT Authentication
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

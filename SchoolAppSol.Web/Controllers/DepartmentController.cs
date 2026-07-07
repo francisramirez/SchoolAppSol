@@ -6,14 +6,15 @@ using SchoolAppSol.Domain.Models;
 using SchoolAppSol.Application.Dtos.Department;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SchoolAppSol.Application.Interfaces.Department;
 
 namespace SchoolAppSol.Web.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentApiClient _departmentService;
+        private readonly IDepartmentService _departmentService;
 
-        public DepartmentController(IDepartmentApiClient departmentService)
+        public DepartmentController(IDepartmentService departmentService)
         {
             _departmentService = departmentService;
         }

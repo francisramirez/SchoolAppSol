@@ -28,10 +28,16 @@ namespace SchoolAppSol.Persitence.Repositories
                 .AnyAsync(d => d.DepartmentId == departmentId && !d.Deleted, ct);
         }
 
+        /// <summary>
+        /// Obtiene todos los departamentos activos (no eliminados) y los proyecta a DepartmentModel.
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         public async Task<IReadOnlyList<DepartmentModel>> GetAllActiveAsync(CancellationToken ct = default)
         {
             return await _context.Departments
                 .Where(cd => !cd.Deleted)
+                .OrderByDescending(cd => cd.DepartmentId)
                 .AsNoTracking()
                 .Select(cd => new DepartmentModel()
                 {
@@ -44,6 +50,8 @@ namespace SchoolAppSol.Persitence.Repositories
 
         public async Task<IReadOnlyList<Department>> GetAllAsync(CancellationToken ct = default)
         {
+
+
             return await _context.Departments
                 .Where(d => !d.Deleted)
                 .AsNoTracking()
